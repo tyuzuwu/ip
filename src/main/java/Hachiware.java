@@ -54,14 +54,47 @@ public class Hachiware {
                 System.out.println("OK, I've marked this task as not done yet: ");
                 System.out.println(currentTask);
                 System.out.println("-----------------------------------------------");
-            } else {
-                //Add to tasks
-                Task newTask = new Task(input);
+            } else if (input.startsWith("todo ")) {
+                String descript = input.substring(5);
+                Task newTask = new ToDo(descript);
                 tasks.add(newTask);
-
-                //Normal Echo
                 System.out.println("-----------------------------------------------");
-                System.out.println("added: " + input);
+                System.out.println("Got it. I've added this task:");
+                System.out.println(newTask);
+                System.out.println("Now you have " + tasks.size() + " tasks in the list.");
+                System.out.println("-----------------------------------------------");
+            } else if (input.startsWith("deadline ")) {
+                //Split input into description and deadline by
+                String[] parts = input.substring(9).split("/by", 2);
+                String descript = parts[0];
+                String by = parts[1];
+                Task newTask = new Deadline(descript, by);
+                tasks.add(newTask);
+                System.out.println("-----------------------------------------------");
+                System.out.println("Got it. I've added this task:");
+                System.out.println(newTask);
+                System.out.println("Now you have " + tasks.size() + " tasks in the list.");
+                System.out.println("-----------------------------------------------");
+            } else if (input.startsWith("event ")) {
+                //Similarly split into parts first
+                String[] parts = input.substring(6).split("/from", 2);
+                String descript = parts[0];
+                //Further split 2nd half into the 2 timings
+                String[] timing = parts[1].split("/to", 2);
+                String from = timing[0];
+                String to = timing[1];
+                Task newTask = new Event(descript, from, to);
+                tasks.add(newTask);
+                System.out.println("-----------------------------------------------");
+                System.out.println("Got it. I've added this task:");
+                System.out.println(newTask);
+                System.out.println("Now you have " + tasks.size() + " tasks in the list.");
+                System.out.println("-----------------------------------------------");
+            } else {
+
+                //Shouldnt reach this point
+                System.out.println("-----------------------------------------------");
+                System.out.println("Invalid command");
                 System.out.println("-----------------------------------------------");
             }
 
