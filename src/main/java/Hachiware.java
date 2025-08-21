@@ -39,7 +39,10 @@ public class Hachiware {
                     }
                     System.out.println("-----------------------------------------------");
                 } else if (input.startsWith("mark")) { //Marking task
-                    int taskIndex = Integer.parseInt(input.substring(4)) - 1; //5th Character of the input onwards, -1 because of indexing
+                    if (input.length() <= 4) {
+                        throw new HachiwareException("MEOW!!! OI The task to mark cannot be empty!");
+                    }
+                    int taskIndex = Integer.parseInt(input.substring(5)) - 1; //5th Character of the input onwards, -1 because of indexing
 
                     if (taskIndex < 0 || taskIndex > tasks.size()) {
                         throw new HachiwareException("Task number out of bounds");
@@ -52,7 +55,10 @@ public class Hachiware {
                     System.out.println("-----------------------------------------------");
 
                 } else if (input.startsWith("unmark")) {
-                    int taskIndex = Integer.parseInt(input.substring(6)) - 1; //7th Character of the input onwards, -1 because of indexing
+                    if (input.length() <= 6) {
+                        throw new HachiwareException("MEOW!!! OI The task to unmark cannot be empty!");
+                    }
+                    int taskIndex = Integer.parseInt(input.substring(7)) - 1; //7th Character of the input onwards, -1 because of indexing
                     if (taskIndex < 0 || taskIndex > tasks.size()) {
                         throw new HachiwareException("Task number out of bounds");
                     }
@@ -114,6 +120,19 @@ public class Hachiware {
                     System.out.println(newTask);
                     System.out.println("Now you have " + tasks.size() + " tasks in the list.");
                     System.out.println("-----------------------------------------------");
+                } else if (input.startsWith("delete")) {
+                    if (input.length() <= 6) {
+                        throw new HachiwareException("MEOW!!! OI What task do you want to delete?");
+                    }
+                    int taskIndex = Integer.parseInt(input.substring(7)) - 1;
+                    //Temp task to hold
+                    Task deletedTask = tasks.remove(taskIndex);
+                    System.out.println("-----------------------------------------------");
+                    System.out.println("Noted. I've removed this task:");
+                    System.out.println(deletedTask);
+                    System.out.println("Now you have " + tasks.size() + " tasks in the list.");
+                    System.out.println("-----------------------------------------------");
+
                 } else {
                     throw new HachiwareException("MEOW! Command doesn't exist.");
                 }
