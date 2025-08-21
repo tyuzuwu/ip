@@ -22,82 +22,106 @@ public class Hachiware {
         while (true) {
             String input = scan.nextLine();
 
-            //If bye, exit loop
-            if (input.equals("bye")) {
+            try {
+                //If bye, exit loop
+                if (input.equals("bye")) {
 
-                System.out.println("-----------------------------------------------");
-                System.out.println("Bye. Hope to see you again soon!");
-                System.out.println("-----------------------------------------------");
-                break;
-            } else if (input.equals("list")) { //Listing tasks
-                //Print list
-                System.out.println("-----------------------------------------------");
-                System.out.println("Here are the tasks in your list:");
-                for (int i = 0; i < tasks.size(); i++) {
-                    System.out.println((i+1) + ". " + tasks.get(i));
+                    System.out.println("-----------------------------------------------");
+                    System.out.println("Bye. Hope to see you again soon!");
+                    System.out.println("-----------------------------------------------");
+                    break;
+                } else if (input.equals("list")) { //Listing tasks
+                    //Print list
+                    System.out.println("-----------------------------------------------");
+                    System.out.println("Here are the tasks in your list:");
+                    for (int i = 0; i < tasks.size(); i++) {
+                        System.out.println((i + 1) + ". " + tasks.get(i));
+                    }
+                    System.out.println("-----------------------------------------------");
+                } else if (input.startsWith("mark")) { //Marking task
+                    int taskIndex = Integer.parseInt(input.substring(4)) - 1; //5th Character of the input onwards, -1 because of indexing
+
+                    if (taskIndex < 0 || taskIndex > tasks.size()) {
+                        throw new HachiwareException("Task number out of bounds");
+                    }
+                    Task currentTask = tasks.get(taskIndex);
+                    currentTask.markAsDone();
+                    System.out.println("-----------------------------------------------");
+                    System.out.println("Nice! I've marked this task as done: ");
+                    System.out.println(currentTask);
+                    System.out.println("-----------------------------------------------");
+
+                } else if (input.startsWith("unmark")) {
+                    int taskIndex = Integer.parseInt(input.substring(6)) - 1; //7th Character of the input onwards, -1 because of indexing
+                    if (taskIndex < 0 || taskIndex > tasks.size()) {
+                        throw new HachiwareException("Task number out of bounds");
+                    }
+                    Task currentTask = tasks.get(taskIndex);
+                    currentTask.markAsNotDone();
+                    System.out.println("-----------------------------------------------");
+                    System.out.println("OK, I've marked this task as not done yet: ");
+                    System.out.println(currentTask);
+                    System.out.println("-----------------------------------------------");
+                } else if (input.startsWith("todo")) {
+
+                    if (input.length() <= 4) {
+                        throw new HachiwareException("MEOW!!! OI The description of a todo cannot be empty.");
+                    }
+                    String descript = input.substring(5);
+                    Task newTask = new ToDo(descript);
+                    tasks.add(newTask);
+                    System.out.println("-----------------------------------------------");
+                    System.out.println("Got it. I've added this task:");
+                    System.out.println(newTask);
+                    System.out.println("Now you have " + tasks.size() + " tasks in the list.");
+                    System.out.println("-----------------------------------------------");
+                } else if (input.startsWith("deadline")) {
+                    if (!input.contains("/by")) {
+                        throw new HachiwareException("MEOW! A deadline must have a /by time.");
+                    }
+                    //Split input into description and deadline by
+                    String[] parts = input.substring(9).split("/by", 2);
+                    if (parts[0].isEmpty()) {
+                        throw new HachiwareException("MEOW! The description of a deadline cannot be empty.");
+                    }
+                    String descript = parts[0];
+                    String by = parts[1];
+                    Task newTask = new Deadline(descript, by);
+                    tasks.add(newTask);
+                    System.out.println("-----------------------------------------------");
+                    System.out.println("Got it. I've added this task:");
+                    System.out.println(newTask);
+                    System.out.println("Now you have " + tasks.size() + " tasks in the list.");
+                    System.out.println("-----------------------------------------------");
+                } else if (input.startsWith("event")) {
+                    if (!input.contains("/from") || !input.contains("/to")) {
+                        throw new HachiwareException("MEOW! An event must have both /from and /to times.");
+                    }
+                    //Similarly split into parts first
+                    String[] parts = input.substring(6).split("/from", 2);
+                    String descript = parts[0];
+                    if (parts[0].isEmpty()) {
+                        throw new HachiwareException("MEOW! The description of a deadline cannot be empty.");
+                    }
+                    //Further split 2nd half into the 2 timings
+                    String[] timing = parts[1].split("/to", 2);
+                    String from = timing[0];
+                    String to = timing[1];
+                    Task newTask = new Event(descript, from, to);
+                    tasks.add(newTask);
+                    System.out.println("-----------------------------------------------");
+                    System.out.println("Got it. I've added this task:");
+                    System.out.println(newTask);
+                    System.out.println("Now you have " + tasks.size() + " tasks in the list.");
+                    System.out.println("-----------------------------------------------");
+                } else {
+                    throw new HachiwareException("MEOW! Command doesn't exist.");
                 }
+            } catch (HachiwareException e) {
                 System.out.println("-----------------------------------------------");
-            } else if (input.startsWith("mark ")) { //Marking tasks
-                int taskIndex = Integer.parseInt(input.substring(5)) - 1; //5th Character of the input onwards, -1 because of indexing
-                Task currentTask = tasks.get(taskIndex);
-                currentTask.markAsDone();
-                System.out.println("-----------------------------------------------");
-                System.out.println("Nice! I've marked this task as done: ");
-                System.out.println(currentTask);
-                System.out.println("-----------------------------------------------");
-
-            } else if (input.startsWith("unmark ")) {
-                int taskIndex = Integer.parseInt(input.substring(7)) - 1; //7th Character of the input onwards, -1 because of indexing
-                Task currentTask = tasks.get(taskIndex);
-                currentTask.markAsNotDone();
-                System.out.println("-----------------------------------------------");
-                System.out.println("OK, I've marked this task as not done yet: ");
-                System.out.println(currentTask);
-                System.out.println("-----------------------------------------------");
-            } else if (input.startsWith("todo ")) {
-                String descript = input.substring(5);
-                Task newTask = new ToDo(descript);
-                tasks.add(newTask);
-                System.out.println("-----------------------------------------------");
-                System.out.println("Got it. I've added this task:");
-                System.out.println(newTask);
-                System.out.println("Now you have " + tasks.size() + " tasks in the list.");
-                System.out.println("-----------------------------------------------");
-            } else if (input.startsWith("deadline ")) {
-                //Split input into description and deadline by
-                String[] parts = input.substring(9).split("/by", 2);
-                String descript = parts[0];
-                String by = parts[1];
-                Task newTask = new Deadline(descript, by);
-                tasks.add(newTask);
-                System.out.println("-----------------------------------------------");
-                System.out.println("Got it. I've added this task:");
-                System.out.println(newTask);
-                System.out.println("Now you have " + tasks.size() + " tasks in the list.");
-                System.out.println("-----------------------------------------------");
-            } else if (input.startsWith("event ")) {
-                //Similarly split into parts first
-                String[] parts = input.substring(6).split("/from", 2);
-                String descript = parts[0];
-                //Further split 2nd half into the 2 timings
-                String[] timing = parts[1].split("/to", 2);
-                String from = timing[0];
-                String to = timing[1];
-                Task newTask = new Event(descript, from, to);
-                tasks.add(newTask);
-                System.out.println("-----------------------------------------------");
-                System.out.println("Got it. I've added this task:");
-                System.out.println(newTask);
-                System.out.println("Now you have " + tasks.size() + " tasks in the list.");
-                System.out.println("-----------------------------------------------");
-            } else {
-
-                //Shouldnt reach this point
-                System.out.println("-----------------------------------------------");
-                System.out.println("Invalid command");
+                System.out.println(e.getMessage());
                 System.out.println("-----------------------------------------------");
             }
-
         }
 
         scan.close();
