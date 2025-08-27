@@ -1,3 +1,4 @@
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -120,9 +121,15 @@ public class Hachiware {
                         throw new HachiwareException("MEOW! The description of a deadline cannot be empty.");
                     }
                     String descript = parts[0];
-                    String by = parts[1];
-                    Task newTask = new Deadline(descript, by);
-                    tasks.add(newTask);
+                    String by = parts[1].trim();
+
+                    Task newTask;
+                    try {
+                        newTask = new Deadline(descript, by);
+                        tasks.add(newTask);
+                    } catch (DateTimeParseException e) {
+                        throw new HachiwareException("Invalid date format. Use yyyy-MM-dd");
+                    }
 
                     try {
                         storage.save(tasks);
@@ -143,13 +150,22 @@ public class Hachiware {
                     String[] parts = input.substring(6).split("/from", 2);
                     String descript = parts[0];
                     if (parts[0].isEmpty()) {
-                        throw new HachiwareException("MEOW! The description of a deadline cannot be empty.");
+                        throw new HachiwareException("MEOW! The description of a event cannot be empty.");
                     }
                     //Further split 2nd half into the 2 timings
                     String[] timing = parts[1].split("/to", 2);
-                    String from = timing[0];
-                    String to = timing[1];
-                    Task newTask = new Event(descript, from, to);
+                    String fromStr = timing[0].trim();
+                    String toStr = timing[1].trim();
+
+                    Task newTask;
+                    try {
+                        newTask = new Event(descript, fromStr, toStr);
+                    } catch (DateTimeParseException e) {
+                        throw new HachiwareException("Invalid date & time format. Use yyyy-MM-dd HH:mm");
+                    } catch (IllegalArgumentException e) {
+                        throw new HachiwareException(e.getMessage());
+                    }
+
                     tasks.add(newTask);
 
                     try {

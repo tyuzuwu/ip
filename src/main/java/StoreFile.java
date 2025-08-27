@@ -62,7 +62,7 @@ public class StoreFile {
             return "T | " + done + " | " + task.description;
         } else if (task instanceof Deadline) {
             Deadline d = (Deadline) task;
-            return "D | " + done + " | " + d.description + " | " + d.by;
+            return "D | " + done + " | " + d.description + " | " + d.getBy(); //Updated to use getBy()
         } else if (task instanceof Event) {
             Event e = (Event) task;
             return "E | " + done + " | " + e.description + " | " + e.from + " | " + e.to;
