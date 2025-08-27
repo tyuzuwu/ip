@@ -15,8 +15,15 @@ public class Hachiware {
         //Use scanner to get user input
         Scanner scan = new Scanner(System.in);
 
-        //Create array of tasks to hold tasks
-        ArrayList<Task> tasks = new ArrayList<>();
+        //Handle the loading of the tasks here from the file
+        StoreFile storage = new StoreFile("./data/Hachiware.txt");
+        ArrayList<Task> tasks;
+        try {
+            tasks = storage.load();
+        } catch (HachiwareException e) {
+            System.out.println("Failed to load tasks: " + e.getMessage());
+            tasks = new ArrayList<>();
+        }
 
         //While loop to repeatedly get user input
         while (true) {
@@ -49,6 +56,14 @@ public class Hachiware {
                     }
                     Task currentTask = tasks.get(taskIndex);
                     currentTask.markAsDone();
+
+                    //Saving the update to file
+                    try {
+                        storage.save(tasks);
+                    } catch (HachiwareException e) {
+                        System.out.println("Failed to save tasks: " + e.getMessage());
+                    }
+
                     System.out.println("-----------------------------------------------");
                     System.out.println("Nice! I've marked this task as done: ");
                     System.out.println(currentTask);
@@ -64,6 +79,13 @@ public class Hachiware {
                     }
                     Task currentTask = tasks.get(taskIndex);
                     currentTask.markAsNotDone();
+
+                    try {
+                        storage.save(tasks);
+                    } catch (HachiwareException e) {
+                        System.out.println("Failed to save tasks: " + e.getMessage());
+                    }
+
                     System.out.println("-----------------------------------------------");
                     System.out.println("OK, I've marked this task as not done yet: ");
                     System.out.println(currentTask);
@@ -76,6 +98,13 @@ public class Hachiware {
                     String descript = input.substring(5);
                     Task newTask = new ToDo(descript);
                     tasks.add(newTask);
+
+                    try {
+                        storage.save(tasks);
+                    } catch (HachiwareException e) {
+                        System.out.println("Failed to save tasks: " + e.getMessage());
+                    }
+
                     System.out.println("-----------------------------------------------");
                     System.out.println("Got it. I've added this task:");
                     System.out.println(newTask);
@@ -94,6 +123,13 @@ public class Hachiware {
                     String by = parts[1];
                     Task newTask = new Deadline(descript, by);
                     tasks.add(newTask);
+
+                    try {
+                        storage.save(tasks);
+                    } catch (HachiwareException e) {
+                        System.out.println("Failed to save tasks: " + e.getMessage());
+                    }
+
                     System.out.println("-----------------------------------------------");
                     System.out.println("Got it. I've added this task:");
                     System.out.println(newTask);
@@ -115,6 +151,13 @@ public class Hachiware {
                     String to = timing[1];
                     Task newTask = new Event(descript, from, to);
                     tasks.add(newTask);
+
+                    try {
+                        storage.save(tasks);
+                    } catch (HachiwareException e) {
+                        System.out.println("Failed to save tasks: " + e.getMessage());
+                    }
+
                     System.out.println("-----------------------------------------------");
                     System.out.println("Got it. I've added this task:");
                     System.out.println(newTask);
@@ -127,6 +170,13 @@ public class Hachiware {
                     int taskIndex = Integer.parseInt(input.substring(7)) - 1;
                     //Temp task to hold
                     Task deletedTask = tasks.remove(taskIndex);
+
+                    try {
+                        storage.save(tasks);
+                    } catch (HachiwareException e) {
+                        System.out.println("Failed to save tasks: " + e.getMessage());
+                    }
+
                     System.out.println("-----------------------------------------------");
                     System.out.println("Noted. I've removed this task:");
                     System.out.println(deletedTask);
