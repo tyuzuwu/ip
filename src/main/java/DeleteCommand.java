@@ -1,0 +1,30 @@
+public class DeleteCommand extends Command {
+    private final int index;
+
+    public DeleteCommand(String arg) throws HachiwareException {
+        try {
+            this.index = Integer.parseInt(arg.trim()) - 1;
+        } catch (NumberFormatException e) {
+            throw new HachiwareException("MEOW! Invalid task number.");
+        }
+    }
+
+    @Override
+    public void execute(TaskList tasks, Ui ui, StoreFile storage) throws HachiwareException {
+        if (index < 0 || index >= tasks.size()) {
+            throw new HachiwareException("Task number out of bounds");
+        }
+        Task removed = tasks.delete(index);
+        storage.save(tasks.getAll());
+        ui.printLine();
+        System.out.println("Noted. I've removed this task:");
+        System.out.println(removed);
+        System.out.println("Now you have " + tasks.size() + " tasks in the list.");
+        ui.printLine();
+    }
+
+    @Override
+    public boolean isExit() {
+        return false;
+    }
+}
