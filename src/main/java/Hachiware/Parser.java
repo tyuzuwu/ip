@@ -45,6 +45,8 @@ public class Parser {
                 return new EventCommand(args);
             case "delete":
                 return new DeleteCommand(args);
+            case "find":
+                return new FindCommand(args);
             default:
                 throw new HachiwareException("MEOW! Hachiware.Hachiware.Command doesn't exist.");
         }
