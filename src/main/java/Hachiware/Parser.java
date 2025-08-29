@@ -1,10 +1,31 @@
 package Hachiware;
 
+/**
+ * Parses user input into available Hachiware command objects
+ * which would execute the specific command.
+ */
 public class Parser {
 
+    /**
+     * Parses a full command string entered by the user
+     * and returns the corresponding Command object.
+     *
+     * @param fullCommand the raw input entered by the user
+     * @return a Command object corresponding to the parsed command
+     * @throws HachiwareException if the command is not recognized
+     */
     public static Command parse(String fullCommand) throws HachiwareException {
+
+        //Splits the user input into at most 2 parts:
+        //1.The first token is treated as the command.
+        //2.The remainder (if any) is treated as the arguments.
+
         String[] words = fullCommand.split(" ", 2);
         String command = words[0];
+
+
+        //Retrieves the rest of the input after the command.
+        //If no additional arguments are provided, assigns an empty string instead.
         String args = words.length > 1 ? words[1] : "";
 
         switch (command) {
