@@ -9,15 +9,30 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.util.Objects;
 
+/**
+ * Handles the saving and loading of tasks from a persistent text file.
+ * Tasks are stored in a text format, with each line representing 1 task.
+ */
 public class StoreFile {
+    /** Persistent filepath to use */
     private final String filePath = "./data/Hachiware.Hachiware.txt";
 
+    /**
+     * Constructs a StoreFile handler.
+     *
+     * @param filePath Path of the file to store and load tasks.
+     */
     public StoreFile(String filePath) {
 
     }
 
-    //Function to convert task line in the text file to a Hachiware.Hachiware.Task object
-    //Line in the form of T | 1 | read book
+    /**
+     * Converts a line of text from the text file into a {@link Task} object.
+     *
+     * @param line A line from the save file (e.g., "T | 1 | read book").
+     * @return A corresponding {@link Task} object (ToDo, Deadline, or Event).
+     * @throws HachiwareException If the line format is invalid or task type is unknown.
+     */
     private Task convertTask(String line) throws HachiwareException {
         String[] parts = line.split(" \\| ");
         String taskType = parts[0];
@@ -56,7 +71,13 @@ public class StoreFile {
 
     }
 
-    //Function to convert Tasks into text file format
+    /**
+     * Converts a {@link Task} object into its text file format.
+     *
+     * @param task The task to convert.
+     * @return A string representation of the task (e.g "T | 1 | read book").
+     * @throws HachiwareException If the task type is unsupported.
+     */
     private String convertTaskToSave(Task task) throws HachiwareException {
         String done = task.isDone ? "1" : "0";
 
@@ -73,7 +94,13 @@ public class StoreFile {
         }
     }
 
-    //Loading tasks from text file into ArrayList<Hachiware.Hachiware.Task>
+    /**
+     * Loads all tasks from the text file into a task list.
+     * Create if the file or parent directories do not exist.
+     *
+     * @return A list of tasks loaded from the save file.
+     * @throws HachiwareException If the file cannot be read or parsed correctly.
+     */
     public ArrayList<Task> load() throws HachiwareException {
         ArrayList<Task> tasks = new ArrayList<>();
 
@@ -102,7 +129,13 @@ public class StoreFile {
         return tasks;
     }
 
-    //Function to save current tasks into the file
+    /**
+     * Saves all current tasks into the text file.
+     * Overwrites the file if it already exists.
+     *
+     * @param tasks The list of tasks to save.
+     * @throws HachiwareException If the file cannot be written.
+     */
     public void save(ArrayList<Task> tasks) throws HachiwareException {
         try {
             File file = new File(filePath);
