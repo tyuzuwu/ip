@@ -1,3 +1,5 @@
+package Hachiware;
+
 public class EventCommand extends Command {
     private final String description;
     private final String from;

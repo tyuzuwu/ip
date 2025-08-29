@@ -1,3 +1,5 @@
+package Hachiware;
+
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.File;
@@ -8,13 +10,13 @@ import java.io.BufferedWriter;
 import java.util.Objects;
 
 public class StoreFile {
-    private final String filePath = "./data/Hachiware.txt";
+    private final String filePath = "./data/Hachiware.Hachiware.txt";
 
     public StoreFile(String filePath) {
 
     }
 
-    //Function to convert task line in the text file to a Task object
+    //Function to convert task line in the text file to a Hachiware.Hachiware.Task object
     //Line in the form of T | 1 | read book
     private Task convertTask(String line) throws HachiwareException {
         String[] parts = line.split(" \\| ");
@@ -71,7 +73,7 @@ public class StoreFile {
         }
     }
 
-    //Loading tasks from text file into ArrayList<Task>
+    //Loading tasks from text file into ArrayList<Hachiware.Hachiware.Task>
     public ArrayList<Task> load() throws HachiwareException {
         ArrayList<Task> tasks = new ArrayList<>();
 

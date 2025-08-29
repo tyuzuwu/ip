@@ -1,3 +1,5 @@
+package Hachiware;
+
 public class Ui {
 
     public void welcome() {
@@ -7,7 +9,7 @@ public class Ui {
                         + " > ^ <   \n";
         System.out.println(logo);
         printLine();
-        System.out.println("Hello~! I'm Hachiware \nWhat can I do for you?");
+        System.out.println("Hello~! I'm Hachiware.Hachiware \nWhat can I do for you?");
         printLine();
     }
 
