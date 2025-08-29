@@ -1,3 +1,5 @@
+package Hachiware;
+
 public class DeadlineCommand extends Command {
     private final String description;
     private final String by;
@@ -5,7 +7,7 @@ public class DeadlineCommand extends Command {
     public DeadlineCommand(String args) throws HachiwareException {
         String[] parts = args.split("/by", 2);
         if (parts.length < 2 || parts[0].trim().isEmpty()) {
-            throw new HachiwareException("MEOW! Deadline must have a description and /by date.");
+            throw new HachiwareException("MEOW! Hachiware.Hachiware.Deadline must have a description and /by date.");
         }
         this.description = parts[0].trim();
         this.by = parts[1].trim();

@@ -1,5 +1,5 @@
-import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
+package Hachiware;
+
 import java.util.Scanner;
 
 public class Hachiware {
@@ -38,7 +38,7 @@ public class Hachiware {
     }
 
     public static void main(String[] args) {
-        new Hachiware("./data/Hachiware.txt").run();
+        new Hachiware("./data/Hachiware.Hachiware.txt").run();
     }
 
 

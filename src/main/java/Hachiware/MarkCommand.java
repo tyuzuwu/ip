@@ -1,7 +1,9 @@
-public class DeleteCommand extends Command {
+package Hachiware;
+
+public class MarkCommand extends Command {
     private final int index;
 
-    public DeleteCommand(String arg) throws HachiwareException {
+    public MarkCommand(String arg) throws HachiwareException {
         try {
             this.index = Integer.parseInt(arg.trim()) - 1;
         } catch (NumberFormatException e) {
@@ -12,14 +14,14 @@ public class DeleteCommand extends Command {
     @Override
     public void execute(TaskList tasks, Ui ui, StoreFile storage) throws HachiwareException {
         if (index < 0 || index >= tasks.size()) {
-            throw new HachiwareException("Task number out of bounds");
+            throw new HachiwareException("Hachiware.Hachiware.Task number out of bounds");
         }
-        Task removed = tasks.delete(index);
+        Task task = tasks.get(index);
+        task.markAsDone();
         storage.save(tasks.getAll());
         ui.printLine();
-        System.out.println("Noted. I've removed this task:");
-        System.out.println(removed);
-        System.out.println("Now you have " + tasks.size() + " tasks in the list.");
+        System.out.println("Nice! I've marked this task as done: ");
+        System.out.println(task);
         ui.printLine();
     }
 

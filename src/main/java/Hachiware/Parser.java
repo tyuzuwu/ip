@@ -1,3 +1,5 @@
+package Hachiware;
+
 public class Parser {
 
     public static Command parse(String fullCommand) throws HachiwareException {
@@ -23,7 +25,7 @@ public class Parser {
             case "delete":
                 return new DeleteCommand(args);
             default:
-                throw new HachiwareException("MEOW! Command doesn't exist.");
+                throw new HachiwareException("MEOW! Hachiware.Hachiware.Command doesn't exist.");
         }
     }
 }

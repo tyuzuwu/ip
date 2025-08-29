@@ -1,3 +1,5 @@
+package Hachiware;
+
 public abstract class Command {
 
     public abstract boolean isExit();
