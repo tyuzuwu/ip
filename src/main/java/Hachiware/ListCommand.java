@@ -2,13 +2,15 @@ package Hachiware;
 
 public class ListCommand extends Command {
     @Override
-    public void execute(TaskList tasks, Ui ui, StoreFile storage) {
-        ui.printLine();
-        System.out.println("Here are the tasks in your list:");
-        for (int i = 0; i < tasks.size(); i++) {
-            System.out.println((i + 1) + ". " + tasks.get(i));
+    public String execute(TaskList tasks, Ui ui, StoreFile storage) {
+        if (tasks.size() == 0) {
+            return "Your task list is empty!";
         }
-        ui.printLine();
+        StringBuilder sb = new StringBuilder("Here are the tasks in your list:\n");
+        for (int i = 0; i < tasks.size(); i++) {
+            sb.append((i + 1)).append(". ").append(tasks.get(i)).append("\n");
+        }
+        return sb.toString();
     }
 
     @Override

@@ -10,24 +10,20 @@ public class Ui {
     /**
      * Prints the welcome message along with a cat logo
      */
-    public void welcome() {
+    public String welcome() {
         String logo =
                 " /\\_/\\  \n"
                         + "( o.o )  \n"
                         + " > ^ <   \n";
-        System.out.println(logo);
-        printLine();
-        System.out.println("Hello~! I'm Hachiware.Hachiware \nWhat can I do for you?");
-        printLine();
+        return logo;
     }
 
     /**
      * Prints the exit message when the program terminates.
      */
-    public void bye() {
-        printLine();
-        System.out.println("Bye. Hope to see you again soon!");
-        printLine();
+    public String bye() {
+        return "Bye. Hope to see you again soon!\n";
+
     }
 
     /**
@@ -37,9 +33,7 @@ public class Ui {
         System.out.println("-----------------------------------------------");
     }
 
-    public void showError(String message) {
-        printLine();
-        System.out.println(message);
-        printLine();
+    public String showError(String message) {
+        return message + "\n";
     }
 }

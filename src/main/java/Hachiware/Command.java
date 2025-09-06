@@ -21,5 +21,5 @@ public abstract class Command {
      * @param storefile The storage handler for saving/loading tasks.
      * @throws HachiwareException If an error occurs during execution.
      */
-    public abstract void execute(TaskList tasks, Ui ui, StoreFile storefile) throws HachiwareException;
+    public abstract String execute(TaskList tasks, Ui ui, StoreFile storefile) throws HachiwareException;
 }
