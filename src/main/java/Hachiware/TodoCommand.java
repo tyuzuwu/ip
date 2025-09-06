@@ -11,15 +11,13 @@ public class TodoCommand extends Command {
     }
 
     @Override
-    public void execute(TaskList tasks, Ui ui, StoreFile storage) throws HachiwareException {
+    public String execute(TaskList tasks, Ui ui, StoreFile storage) throws HachiwareException {
         Task task = new ToDo(description);
         tasks.add(task);
         storage.save(tasks.getAll());
-        ui.printLine();
-        System.out.println("Got it. I've added this task:");
-        System.out.println(task);
-        System.out.println("Now you have " + tasks.size() + " tasks in the list.");
-        ui.printLine();
+        return "Got it. I've added this task:\n"
+                + task + "\n"
+                + "Now you have " + tasks.size() + " tasks in the list.";
     }
 
     @Override

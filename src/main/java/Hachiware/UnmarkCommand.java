@@ -12,17 +12,14 @@ public class UnmarkCommand extends Command {
     }
 
     @Override
-    public void execute(TaskList tasks, Ui ui, StoreFile storage) throws HachiwareException {
+    public String execute(TaskList tasks, Ui ui, StoreFile storage) throws HachiwareException {
         if (index < 0 || index >= tasks.size()) {
             throw new HachiwareException("Hachiware.Hachiware.Task number out of bounds");
         }
         Task task = tasks.get(index);
         task.markAsNotDone();
         storage.save(tasks.getAll());
-        ui.printLine();
-        System.out.println("OK, I've marked this task as not done yet: ");
-        System.out.println(task);
-        ui.printLine();
+        return "OK, I've marked this task as not done yet:\n" + task;
     }
 
     @Override

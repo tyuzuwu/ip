@@ -12,17 +12,15 @@ public class DeleteCommand extends Command {
     }
 
     @Override
-    public void execute(TaskList tasks, Ui ui, StoreFile storage) throws HachiwareException {
+    public String execute(TaskList tasks, Ui ui, StoreFile storage) throws HachiwareException {
         if (index < 0 || index >= tasks.size()) {
             throw new HachiwareException("Hachiware.Hachiware.Task number out of bounds");
         }
         Task removed = tasks.delete(index);
         storage.save(tasks.getAll());
-        ui.printLine();
-        System.out.println("Noted. I've removed this task:");
-        System.out.println(removed);
-        System.out.println("Now you have " + tasks.size() + " tasks in the list.");
-        ui.printLine();
+        return "Noted. I've removed this task:\n"
+                + removed + "\n"
+                + "Now you have " + tasks.size() + " tasks in the list.";
     }
 
     @Override

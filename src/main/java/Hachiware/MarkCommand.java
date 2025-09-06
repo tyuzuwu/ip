@@ -12,17 +12,14 @@ public class MarkCommand extends Command {
     }
 
     @Override
-    public void execute(TaskList tasks, Ui ui, StoreFile storage) throws HachiwareException {
+    public String execute(TaskList tasks, Ui ui, StoreFile storage) throws HachiwareException {
         if (index < 0 || index >= tasks.size()) {
             throw new HachiwareException("Hachiware.Hachiware.Task number out of bounds");
         }
         Task task = tasks.get(index);
         task.markAsDone();
         storage.save(tasks.getAll());
-        ui.printLine();
-        System.out.println("Nice! I've marked this task as done: ");
-        System.out.println(task);
-        ui.printLine();
+        return "Nice! I've marked this task as done:\n" + task;
     }
 
     @Override

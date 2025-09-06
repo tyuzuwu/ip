@@ -16,7 +16,7 @@ public class FindCommand extends Command {
     }
 
     @Override
-    public void execute(TaskList tasks, Ui ui, StoreFile storeFile) throws HachiwareException {
+    public String execute(TaskList tasks, Ui ui, StoreFile storeFile) throws HachiwareException {
         ArrayList<Task> filteredTasks = new ArrayList<>();
 
         if (keyword == null || keyword.isBlank()) {
@@ -29,16 +29,17 @@ public class FindCommand extends Command {
             }
         }
 
-        ui.printLine();
+
         if (filteredTasks.isEmpty()) {
-            System.out.println("No matching tasks found for: " + keyword);
+            return "No matching tasks found for: " + keyword;
         } else {
-            System.out.println("Here are the matching tasks in your list:");
+            StringBuilder sb = new StringBuilder("Here are the matching tasks in your list:\n");
             for (int i = 0; i < filteredTasks.size(); i++) {
-                System.out.println((i + 1) + "." + filteredTasks.get(i));
+                sb.append((i + 1)).append(". ").append(filteredTasks.get(i)).append("\n");
             }
+            return sb.toString();
         }
-        ui.printLine();
+
     }
 }
 
