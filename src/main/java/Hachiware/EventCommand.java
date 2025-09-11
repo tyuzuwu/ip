@@ -22,6 +22,9 @@ public class EventCommand extends Command {
 
     @Override
     public String execute(TaskList tasks, Ui ui, StoreFile storage) throws HachiwareException {
+        assert tasks != null : "TaskList cannot be null";
+        assert storage != null : "StoreFile cannot be null";
+
         Task task;
         try {
             task = new Event(description, from, to);
