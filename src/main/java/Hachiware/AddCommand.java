@@ -9,6 +9,7 @@ public class AddCommand extends Command {
 
     @Override
     public String execute(TaskList tasks, Ui ui, StoreFile storage) throws HachiwareException {
+
         tasks.add(task);
         storage.save(tasks.getAll());
         return "Got it. I've added this task:\n"

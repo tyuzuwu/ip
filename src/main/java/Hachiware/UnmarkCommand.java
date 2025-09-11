@@ -13,6 +13,9 @@ public class UnmarkCommand extends Command {
 
     @Override
     public String execute(TaskList tasks, Ui ui, StoreFile storage) throws HachiwareException {
+        assert tasks != null : "TaskList cannot be null";
+        assert storage != null : "StoreFile cannot be null";
+
         if (index < 0 || index >= tasks.size()) {
             throw new HachiwareException("Hachiware.Hachiware.Task number out of bounds");
         }

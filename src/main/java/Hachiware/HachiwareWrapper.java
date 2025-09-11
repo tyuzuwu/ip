@@ -10,8 +10,12 @@ public class HachiwareWrapper {
 
     public HachiwareWrapper(String filePath) {
         this.ui = new Ui();
+
+        assert filePath != null : "filePath cannot be null";
         this.storage = new StoreFile(filePath);
+
         TaskList loaded;
+
         try {
             loaded = new TaskList(storage.load());
         } catch (HachiwareException e) {

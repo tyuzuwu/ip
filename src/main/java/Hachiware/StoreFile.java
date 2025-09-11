@@ -41,6 +41,7 @@ public class StoreFile {
 
         switch (taskType) {
             case "T":
+                assert parts.length >= 3 : "ToDo must have at least 3 parts";
                 Task todo = new ToDo(descript);
                 if (isDone) {
                     todo.markAsDone();
@@ -48,6 +49,7 @@ public class StoreFile {
                 return todo;
 
             case "D":
+                assert parts.length >= 4 : "Deadline must have at least 4 parts";
                 String by = parts[3];
                 Task deadline = new Deadline(descript, by);
                 if (isDone) {
@@ -56,6 +58,7 @@ public class StoreFile {
                 return deadline;
 
             case "E":
+                assert parts.length >= 5 : "Event must have at least 5 parts";
                 String from = parts[3];
                 String to = parts[4];
                 Task event = new Event(descript, from, to);
@@ -80,6 +83,8 @@ public class StoreFile {
      */
     private String convertTaskToSave(Task task) throws HachiwareException {
         String done = task.isDone ? "1" : "0";
+
+        assert task != null : "Task cannot be null when saving";
 
         if (task instanceof ToDo) {
             return "T | " + done + " | " + task.description;
@@ -119,6 +124,7 @@ public class StoreFile {
             try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
                 String line;
                 while ((line = reader.readLine()) != null) {
+                    assert convertTask(line) != null: "Task to convert should not be null";
                     tasks.add(convertTask(line));
                 }
             }
@@ -137,6 +143,12 @@ public class StoreFile {
      * @throws HachiwareException If the file cannot be written.
      */
     public void save(ArrayList<Task> tasks) throws HachiwareException {
+
+        assert tasks != null : "Task list cannot be null";
+        for (Task t : tasks) {
+            assert t != null : "Task list contains a null task";
+        }
+
         try {
             File file = new File(filePath);
             File parent = file.getParentFile();

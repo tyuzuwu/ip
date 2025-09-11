@@ -24,6 +24,7 @@ public class TaskList {
      * @param tasks an existing list of tasks
      */
     public TaskList(ArrayList<Task> tasks) {
+        assert tasks != null : "TaskList cannot be initialized with null tasks";
         this.tasks = tasks;
     }
 
@@ -33,6 +34,7 @@ public class TaskList {
      * @param task the task to add
      */
     public void add(Task task) {
+        assert task != null : "Cannot add null task";
         tasks.add(task);
     }
 
@@ -73,6 +75,9 @@ public class TaskList {
      * @return an ArrayList containing all tasks
      */
     public ArrayList<Task> getAll() {
+        for (Task t : tasks) {
+            assert t != null : "TaskList contains null task";
+        }
         return tasks;
     }
 }

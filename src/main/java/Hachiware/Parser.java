@@ -20,6 +20,7 @@ public class Parser {
         //1.The first token is treated as the command.
         //2.The remainder (if any) is treated as the arguments.
 
+        assert fullCommand != null : "fullCommand should never be null";
         String[] words = fullCommand.split(" ", 2);
         String command = words[0];
 
