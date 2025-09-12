@@ -5,9 +5,14 @@ public class DeadlineCommand extends Command {
     private final String by;
 
     public DeadlineCommand(String args) throws HachiwareException {
+        //Split input into description and due date
         String[] parts = args.split("/by", 2);
-        if (parts.length < 2 || parts[0].trim().isEmpty()) {
-            throw new HachiwareException("MEOW! Hachiware.Hachiware.Deadline must have a description and /by date.");
+
+        //Check if there are 2 arguments
+        if (parts.length < 2) {
+            throw new HachiwareException("MEOW! Hachiware.Hachiware.Deadline must have a /by date.");
+        } else if (parts[0].trim().isEmpty()) { //Check if description exist
+            throw new HachiwareException("MEOW! Hachiware.Hachiware.Deadline must have a description.");
         }
         this.description = parts[0].trim();
         this.by = parts[1].trim();
@@ -26,9 +31,7 @@ public class DeadlineCommand extends Command {
         }
         tasks.add(task);
         storage.save(tasks.getAll());
-        return "Got it. I've added this task:\n"
-                + task + "\n"
-                + "Now you have " + tasks.size() + " tasks in the list.";
+        return ui.showAddTaskMessage(task, tasks.size());
     }
 
     @Override

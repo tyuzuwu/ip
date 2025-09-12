@@ -18,9 +18,7 @@ public class TodoCommand extends Command {
         Task task = new ToDo(description);
         tasks.add(task);
         storage.save(tasks.getAll());
-        return "Got it. I've added this task:\n"
-                + task + "\n"
-                + "Now you have " + tasks.size() + " tasks in the list.";
+        return ui.showAddTaskMessage(task, tasks.size());
     }
 
     @Override
