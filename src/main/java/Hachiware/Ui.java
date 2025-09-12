@@ -36,4 +36,15 @@ public class Ui {
     public String showError(String message) {
         return message + "\n";
     }
+
+    public String showAddTaskMessage(Task task, int totalTasks) {
+        return "Got it. I've added this task:\n"
+                + task + "\n"
+                + "Now you have " + totalTasks + " tasks in the list.";
+    }
+
+    public String showDeleteTaskMessage(Task removed, int totalTasks) {
+        return "Noted. I've removed this task:\n" + removed + "\n" +
+                "Now you have " + totalTasks + " tasks in the list.";
+    }
 }

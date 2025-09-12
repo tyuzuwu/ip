@@ -3,6 +3,8 @@ package Hachiware;
 public class UnmarkCommand extends Command {
     private final int index;
 
+    private static final String SUCCESS_MESSAGE = "OK, I've marked this task as not done yet:\n";
+
     public UnmarkCommand(String arg) throws HachiwareException {
         try {
             this.index = Integer.parseInt(arg.trim()) - 1;
@@ -22,7 +24,7 @@ public class UnmarkCommand extends Command {
         Task task = tasks.get(index);
         task.markAsNotDone();
         storage.save(tasks.getAll());
-        return "OK, I've marked this task as not done yet:\n" + task;
+        return SUCCESS_MESSAGE + task;
     }
 
     @Override

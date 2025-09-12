@@ -6,18 +6,13 @@ public class EventCommand extends Command {
     private final String to;
 
     public EventCommand(String args) throws HachiwareException {
-        if (!args.contains("/from") || !args.contains("/to")) {
-            throw new HachiwareException("MEOW! An event must have both /from and /to times.");
-        }
-        String[] parts = args.split("/from", 2);
-        this.description = parts[0].trim();
-        String[] timing = parts[1].split("/to", 2);
-        this.from = timing[0].trim();
-        this.to = timing[1].trim();
+        validateArgs(args);
+        this.description = parseDescription(args);
+        String[] timings = parseTimings(args);
+        this.from = timings[0];
+        this.to = timings[1];
 
-        if (this.description.isEmpty()) {
-            throw new HachiwareException("MEOW! The description of an event cannot be empty.");
-        }
+
     }
 
     @Override
@@ -33,13 +28,31 @@ public class EventCommand extends Command {
         }
         tasks.add(task);
         storage.save(tasks.getAll());
-        return "Got it. I've added this task:\n"
-                + task + "\n"
-                + "Now you have " + tasks.size() + " tasks in the list.";
+        return ui.showAddTaskMessage(task, tasks.size());
     }
 
     @Override
     public boolean isExit() {
         return false;
+    }
+
+    private void validateArgs(String args) throws HachiwareException {
+        if (!args.contains("/from") || !args.contains("/to")) {
+            throw new HachiwareException("MEOW! An event must have both /from and /to times.");
+        }
+    }
+
+    private String parseDescription(String args) throws HachiwareException {
+        String[] parts = args.split("/from", 2);
+        String desc = parts[0].trim();
+        if (desc.isEmpty()) {
+            throw new HachiwareException("MEOW! The description of an event cannot be empty.");
+        }
+        return desc;
+    }
+
+    private String[] parseTimings(String args) {
+        String[] parts = args.split("/from", 2);
+        return parts[1].split("/to", 2);
     }
 }
