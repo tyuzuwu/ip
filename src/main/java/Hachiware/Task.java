@@ -9,6 +9,7 @@ public class Task {
     protected String description;
     /** Completion status of the task. */
     protected boolean isDone;
+    protected Priority priority;
 
     /**
      * Creates a new Task with the given description.
@@ -19,6 +20,20 @@ public class Task {
     public Task(String description) {
         this.description = description;
         this.isDone = false;
+        this.priority = Priority.UNTAGGED;
+    }
+
+
+    public Priority getPriority() {
+        return priority;
+    }
+
+    public void setPriority(Priority priority) {
+        this.priority = priority;
+    }
+
+    public String getPriorityString() {
+        return priority == null ? "Untagged" : priority.name();
     }
 
     /**
@@ -51,6 +66,7 @@ public class Task {
      */
     @Override
     public String toString() {
-        return "[" + getStatusIcon() + "] " + description;
+        return "[" + getStatusIcon() + "] " + description +  " (Priority: " + priority + ")";
+
     }
 }
