@@ -3,6 +3,7 @@ package Hachiware;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.File;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.io.IOException;
 import java.io.BufferedReader;
@@ -16,6 +17,7 @@ import java.util.Objects;
 public class StoreFile {
     /** Persistent filepath to use */
     private final String filePath = "./data/Hachiware.Hachiware.txt";
+    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
     /**
      * Constructs a StoreFile handler.
@@ -41,30 +43,33 @@ public class StoreFile {
 
         switch (taskType) {
             case "T":
-                assert parts.length >= 3 : "ToDo must have at least 3 parts";
+                assert parts.length >= 4 : "ToDo must have at least 4 parts";
                 Task todo = new ToDo(descript);
                 if (isDone) {
                     todo.markAsDone();
                 }
+                todo.setPriority(Priority.valueOf(parts[3].toUpperCase()));
                 return todo;
 
             case "D":
-                assert parts.length >= 4 : "Deadline must have at least 4 parts";
+                assert parts.length >= 5 : "Deadline must have at least 5 parts";
                 String by = parts[3];
                 Task deadline = new Deadline(descript, by);
                 if (isDone) {
                     deadline.markAsDone();
                 }
+                deadline.setPriority(Priority.valueOf(parts[4].toUpperCase()));
                 return deadline;
 
             case "E":
-                assert parts.length >= 5 : "Event must have at least 5 parts";
+                assert parts.length >= 6 : "Event must have at least 6 parts";
                 String from = parts[3];
                 String to = parts[4];
                 Task event = new Event(descript, from, to);
                 if (isDone) {
                     event.markAsDone();
                 }
+                event.setPriority(Priority.valueOf(parts[5].toUpperCase()));
                 return event;
 
             default:
@@ -87,13 +92,15 @@ public class StoreFile {
         assert task != null : "Task cannot be null when saving";
 
         if (task instanceof ToDo) {
-            return "T | " + done + " | " + task.description;
+            return "T | " + done + " | " + task.description + " | " + task.getPriority();
         } else if (task instanceof Deadline) {
             Deadline d = (Deadline) task;
-            return "D | " + done + " | " + d.description + " | " + d.getBy(); //Updated to use getBy()
+            return "D | " + done + " | " + d.description + " | " + d.getBy()
+                    + " | " + d.getPriority(); //Updated to use getBy()
         } else if (task instanceof Event) {
             Event e = (Event) task;
-            return "E | " + done + " | " + e.description + " | " + e.from + " | " + e.to;
+            return "E | " + done + " | " + e.description + " | " + e.from.format(FORMATTER)
+                    + " | " + e.to.format(FORMATTER) + " | " + e.getPriority();
         } else {
             throw new HachiwareException("Unknown task type");
         }

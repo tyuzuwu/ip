@@ -28,8 +28,8 @@ public class Event extends Task {
     public Event(String description, String from, String to) throws HachiwareException {
         super(description);
         try {
-            this.from = LocalDateTime.parse(from, FORMATTER);
-            this.to = LocalDateTime.parse(to, FORMATTER);
+            this.from = LocalDateTime.parse(from.trim(), FORMATTER);
+            this.to = LocalDateTime.parse(to.trim(), FORMATTER);
         } catch (DateTimeParseException e) {
             throw new HachiwareException("Invalid date & time format. Use yyyy-MM-dd HH:mm");
         }
@@ -47,6 +47,6 @@ public class Event extends Task {
      */
     @Override
     public String toString() {
-        return "[E]" + super.toString() + "(from: " + from.format(FORMATTER) + " to: " + to.format(FORMATTER) + ")";
+        return "[E]" + super.toString() + " (from: " + from.format(FORMATTER) + " to: " + to.format(FORMATTER) + ")";
     }
 }

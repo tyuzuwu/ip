@@ -12,6 +12,10 @@ public class ListCommand extends Command {
             return TASK_LIST_EMPTY;
         }
 
+        tasks.getAll().sort((t1, t2) -> {
+            return t1.getPriority().ordinal() - t2.getPriority().ordinal();
+        });
+
         StringBuilder sb = new StringBuilder(TASK_LIST_HEADER);
         for (int i = 0; i < tasks.size(); i++) {
             sb.append((i + 1)).append(". ").append(tasks.get(i)).append("\n");
